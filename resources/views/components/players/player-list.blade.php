@@ -24,9 +24,13 @@
             <td>{{$player->name}}</td>
             <td>{{$player->address}}</td>
             <td>@if($player->retired) <i  class=" text-success bi bi-emoji-smile-fill"></i> @else <i class=" text-danger bi bi-emoji-frown-fill"></i> @endif  </td>
-            <td>  <a class="btn btn-success" href="{{url('players/' . $player->id)}}">Show</a> </td>
-            <td>  <a class="btn btn-primary" href="{{url('players/' . $player->id)}}">Edit</a> </td>
-            <td>  <a class="btn btn-danger" href="{{url('players/' . $player->id)}}">Delete</a> </td>
+            <td>  <a class="btn btn-success" href="{{url('players/' . $player->id)}}">Show</a>
+             <a class="btn btn-primary" href="{{url('players/' . $player->id . '/edit')}}">Edit</a>
+                <form action="{{url('players/' . $player->id)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form> </td>
         </tr>
     @endforeach
     </tbody>

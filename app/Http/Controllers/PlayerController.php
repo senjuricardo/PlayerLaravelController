@@ -12,10 +12,23 @@ class PlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $players = Player::orderBy('id', 'desc')->paginate(15);
+
+         /*$players = ($request->search) ?  Player::orderBy('id', 'desc')->paginate(15) :
+             Player::where('name', 'LIKE', '%'. $request->search . '%')->paginate(15);*/
+
+        if($request->search == null ){
+            $players = Player::orderBy('id', 'desc')->paginate(15);
+        }
+        else
+        {
+            $players = Player::where('name', 'LIKE', '%'. $request->search . '%')->paginate(15);
+        }
         return view('pages.players.index', ['players' => $players]);
+
+
+
     }
 
     /**
@@ -39,9 +52,25 @@ class PlayerController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'address' => 'required',
+            'description' => 'required',
+            'retired' => 'required',
         ]);
 
-        Player::create($request->all());
+       // Player::create($request->all());
+
+        Player::create([
+            'name'        => $request->name,
+            'address'     => $request->address,
+            'description'     => $request->description,
+            'retired'     => $request->retired,
+               ]);
+
+       /* $player              = new Player();
+        $player->name        = $request->name;
+        $player->address     = $request->address;
+        $player->description = $request->description;
+        $player->retired     = $request->retired;
+        $player->save();  */
 
         return redirect('players')->with('status','Item created successfully!');
     }
@@ -54,7 +83,7 @@ class PlayerController extends Controller
      */
     public function show(Player $player)
     {
-        //
+        return (view('pages.players.show', ['player' =>$player]));
     }
 
     /**
@@ -65,7 +94,7 @@ class PlayerController extends Controller
      */
     public function edit(Player $player)
     {
-        //
+        return (view('pages.players.edit', ['player' =>$player]));
     }
 
     /**
@@ -77,7 +106,8 @@ class PlayerController extends Controller
      */
     public function update(Request $request, Player $player)
     {
-        //
+        $player->update($request->all());
+        return redirect('players')->with('status','Item edited successfully!');
     }
 
     /**
@@ -88,6 +118,23 @@ class PlayerController extends Controller
      */
     public function destroy(Player $player)
     {
-        //
+        $player->delete();
+        return redirect('players')->with('status','Item deleted successfully!');
+    }
+    /*public function search(Request $request)
+    {
+
+        //$players -> where('name', 'LIKE', '%'. $request .'%');
+
+         $players = Player::where('name', 'LIKE', '%'. $request->search . '%')->paginate(15);
+        return view('pages.players.index', ['players' => $players]);
+    }*/
+    public function destall()
+    {
+
+        Player::truncate();
+
+
+        return redirect('players')->with('status','Deleted All Successfully!');
     }
 }

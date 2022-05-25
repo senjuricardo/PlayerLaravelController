@@ -22,6 +22,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/players','PlayerController@index');
 Route::get('/players/create','PlayerController@create');
+Route::get('/players/{player}/edit','PlayerController@edit');
 Route::post('/players/','PlayerController@store');
-Route::get('/players{player}','PlayerController@show');
+Route::delete('/players/destall','PlayerController@destall');
+Route::get('/players/{player}','PlayerController@show');
+Route::put('/players/{player}', 'PlayerController@update');
+Route::delete('/players/{player}', 'PlayerController@destroy');
+
 

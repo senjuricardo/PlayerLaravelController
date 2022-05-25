@@ -12,8 +12,8 @@
                 <a class="dropdown-item" href="{{url('players/create')}}">Add Player</a>
             </div>
         </div>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form  action="{{url('players/')}}" method="get" class="form-inline my-2 my-lg-0">
+            <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
