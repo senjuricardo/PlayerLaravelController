@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Exports\PlayersExport;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/players');
 });
 
 Auth::routes();
@@ -25,8 +26,10 @@ Route::get('/players/create','PlayerController@create');
 Route::get('/players/{player}/edit','PlayerController@edit');
 Route::post('/players/','PlayerController@store');
 Route::delete('/players/destall','PlayerController@destall');
-Route::get('/players/{player}','PlayerController@show');
+
 Route::put('/players/{player}', 'PlayerController@update');
 Route::delete('/players/{player}', 'PlayerController@destroy');
 
-
+Route::get('players/export/', 'PlayerController@export');
+Route::post('players/import', 'PlayerController@import');
+Route::get('/players/{player}','PlayerController@show');

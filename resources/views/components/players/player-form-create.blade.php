@@ -1,7 +1,8 @@
 
 <div class="col-4 mx-auto mt-5">
-<form method="POST" action="{{ url('players') }}">
+<form method="POST" action="{{ url('players') }}" enctype="multipart/form-data">
     @csrf
+
     <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -60,14 +61,37 @@
  </span>
         @enderror
     </div>
-
+    <div class="form-group">
     <label for="retired">Retired</label>
     <br>
-
-         <input type="radio" id="yes" name="retired" value="1">
+         <input type="radio" id="yes" name="retired" value="1"  class="@error('retired') is-invalid @enderror">
          <label for="yes">YES</label><br>
-         <input type="radio" id="no" name="retired" value="0">
-        <label for="no">NO</label><br>
+         <input type="radio" id="no" name="retired" value="0"  class="@error('retired') is-invalid @enderror">
+        <label for="no">NO</label>
+
+
+        @error('retired')<span class="invalid-feedback" role="alert">
+            <strong>{{$message }}</strong>
+        </span>
+        @enderror
+    </div>
+
+    <div class="form-group">
+        <label for="name">Image</label>
+        <input
+            type="file"
+            id="image"
+            name="image"
+            autocomplete="image"
+            class="form-control @error('image') is-invalid @enderror"
+            value="{{old('image') }}"
+            required/>
+        @error('image')<span class="invalid-feedback" role="alert">
+            <strong>{{$message }}</strong>
+        </span>
+        @enderror
+    </div>
+
 
 
     <button type="submit" class="mt-2 mb-5 btn btn-primary">Submit</button>
